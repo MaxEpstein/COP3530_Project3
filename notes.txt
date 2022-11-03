@@ -13,3 +13,9 @@ ideas for possible outputs:
     - how many flights were cancelled in 2008?
     - total number of delays in 2008?
     - what contributed to most delays? (carrier, weather, NAS, security, late aircraft)
+
+
+
+see time it takes to search in our 2008 dataset
+    ie. print all delayed flights from X airline, search for all flights by X airline, search for all flights out of X airport, etc
+
