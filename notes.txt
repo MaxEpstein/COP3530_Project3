@@ -1,0 +1,15 @@
+ideas for possible outputs:
+    - average delay time
+    - average delay time by major airline
+    - average delay time by major airport
+    - highest average delay time for three above
+    - highest ever delay
+    - shortest ever delay (earliest arrival)
+    - what day of the week had most delays?
+    - what day of the week had least delays?
+    - what time of day had most delays (morning, afternoon, night)
+    - above, least delays
+    - when the distance of the flight increases, do the amount of delays also increase?
+    - how many flights were cancelled in 2008?
+    - total number of delays in 2008?
+    - what contributed to most delays? (carrier, weather, NAS, security, late aircraft)
