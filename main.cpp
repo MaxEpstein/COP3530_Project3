@@ -16,12 +16,12 @@ int main(){
 
 void getFlightDataFromFile(){
     fstream file("2008.csv", ios::in);
-    string names, line, data;
+    string source, destination, delayTime;
     vector<string> infoForDataStructures;
     if (file.is_open()){
-        while(getline(file, names)){
-            while (getline(file,line, ',')){
-            infoForDataStructures.push_back(line);
+        while(getline(file, source)){
+            while (getline(file,destination, ',')){
+            infoForDataStructures.push_back(destination);
         }
         }
     }
