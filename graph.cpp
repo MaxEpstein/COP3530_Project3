@@ -56,7 +56,8 @@ class graph{
             }else{
                 return INT32_MAX;
             }
-            cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
+            //for testing purposes
+            //cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
             return tempDelay / tempDataStorage.size();
         };
 
@@ -66,7 +67,7 @@ class graph{
             if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
                 tempDataStorage = findAirportItr->second;
                 for(int i = 0; i < tempDataStorage.size(); i++){
-                    if(get<1>(tempDataStorage.at(i))){
+                    if(get<0>(tempDataStorage.at(i)) == userDestinationAirport){
                         tempDelay += get<1>(tempDataStorage.at(i));
                     }
                 }
