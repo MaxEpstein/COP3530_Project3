@@ -46,7 +46,7 @@ class graph{
         // };
 
         double getAverageDelayTime(string userAirport){
-            double tempDelay = 0;
+            double tempDelay = 0.00;
             auto findAirportItr = airportMap.find(userAirport); //find iterator to given user airport
             if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
                 tempDataStorage = findAirportItr->second;
@@ -60,7 +60,7 @@ class graph{
         };
 
         double getAverageDelayTimeGivenTwoAirportInputs(string userSourceAirport, string userDestinationAirport){
-            double tempDelay = 0;
+            double tempDelay = 0.00;
             auto findAirportItr = airportMap.find(userSourceAirport); //find iterator to given user airport
             if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
                 tempDataStorage = findAirportItr->second;
