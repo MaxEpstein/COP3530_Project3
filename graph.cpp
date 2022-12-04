@@ -19,7 +19,7 @@ class graph{
 
         //
 
-        graph();
+        graph(){};
         //tuple being passed: source, destination, delay, flightNum
         void addEdge(tuple<string, string, string, string> passedData){
             vector<tuple<string, int, int>> tempDataStorage;
