@@ -58,6 +58,20 @@ class graph{
             return tempDelay / tempDataStorage.size();
         };
 
+        double getAverageDelayTimeGivenTwo(string userSourceAirport, string userDestinationAirport){
+            int tempDelay;
+            auto findAirportItr = airportMap.find(userAirport); //find iterator to given user airport
+            if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
+                tempDataStorage = findAirportItr->second;
+                for(int i = 0; i < tempDataStorage.size(); i++){
+                    tempDelay += get<2>(tempDataStorage.at(i));
+                }
+            }else{
+                return INT32_MAX;
+            }
+            return tempDelay / tempDataStorage.size();
+        };
+
 
 
 };
