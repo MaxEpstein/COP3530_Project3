@@ -3,6 +3,9 @@
 #include <sstream>
 #include <vector>
 
+#include "graph.cpp"
+#include "hash.cpp"
+
 using namespace std;
 
 int main(){
