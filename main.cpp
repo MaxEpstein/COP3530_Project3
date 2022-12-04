@@ -7,7 +7,7 @@
 #include "hash.cpp"
 
 using namespace std;
-
+void getFlightDataFromFile(graph theGraph);
 int main(){
     //hash
     //graph
@@ -15,27 +15,41 @@ int main(){
 
     getFlightDataFromFile(ourGraph);
 
+    string userAirport;
+    cout << "Welcome to the Flight Delay Calculator" << endl;
+    cout << "Please input the airport abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
+    cin >> userAirport;
+    double averageDelayTime = 6.00;
+    //ourGraph.getAverageDelayTime(userAirport);
+
+    if (averageDelayTime == INT32_MAX){
+        cout << "No Data Found. Airport Does Not Exist" << endl;
+    }
+    else 
+        cout << "The average delay for a flight out of: " << userAirport << " is " << averageDelayTime << " minutes" << endl;
+
     return 0;
 }
 
 //need to pass in graph and hash data types to initialize the data structures
 void getFlightDataFromFile(graph theGraph){
     fstream file("Test.csv", ios::in);
-    string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummyTest;
+
+    string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
+
     vector<string> holdingValues;
     vector<vector<string>> usefulData;
     //we want columns 15 (delay time), 17(origin/source), 18(destination)
     if (file.is_open()){
-        while (file >> dummyTest){
+        getline(file,entireLine);
+        while (getline(file, entireLine)){
             holdingValues.clear();
 
-            getline(file, entireLine);
-
-            istringstream s(entireLine);
+            stringstream s(entireLine);
 
             while (getline(s, test, ',')){
-                holdingValues.push_back(dummyTest);
+                holdingValues.push_back(test);
 
             }
             Month = holdingValues[1];
@@ -54,6 +68,9 @@ void getFlightDataFromFile(graph theGraph){
             holdingValues2.push_back(delayTime);
 
             theGraph.addEdge(make_tuple(origin, dest, delayTime, flightNumber));
+
+            //used for testing
+            cout << "Flight Number: " << flightNumber << " origin: " << origin << " dest: " << dest << " delay: " << delayTime << endl;
 
             usefulData.push_back(holdingValues2);
 
