@@ -31,45 +31,45 @@ struct HashNode {
        }
 
 //===============Accessors==============//
-       string HashNode::getHashKey() const{
+       string HashNode::GetHashKey() const{
             return hashKey;
        }
     
-       string HashNode::getOriginAirport() const{
+       string HashNode::GetOriginAirport() const{
             return get<0>(flightData);
        }
 
-       string HashNode::getDestinationAirport() const{
+       string HashNode::GetDestinationAirport() const{
             return get<1>(flightData);
        }
        
-       int getFlightDelayTime() const{
+       int GetFlightDelayTime() const{
             return get<2>(flightData);
        }
 
-        HashNode* getNext() const{
+        HashNode* GetNext() const{
         return next;
     }
 
 //===============Setters==============//
 
-        void setHashKey(string newHashKey){
+        void SetHashKey(string newHashKey){
             this->hashKey = newHashKey;
         }
 
-        void setOriginAirport(string newOrigin){
+        void SetOriginAirport(string newOrigin){
             get<0>(this->flightData) = newOrigin;
         }
 
-        void setDestinationAirport(string newDestination){
+        void SetDestinationAirport(string newDestination){
             get<1>(this->flightData) = newDestination;
         }
 
-        void setFlightDelay(int newDelayTime){
+        void SetFlightDelay(int newDelayTime){
             get<2>(this->flightData) = newDelayTime;
         }
         
-        void setNext(HashNode* newNext) {
+        void SetNext(HashNode* newNext) {
                 this->next = newNext;
         }
         
@@ -108,7 +108,7 @@ class HashTable {
     };
 
     
-    void HashTable::newNode(string newDateFlightNumber, tuple<string, string, int> newFlightData){
+    void HashTable::NewNode(string newDateFlightNumber, tuple<string, string, int> newFlightData){
         //Set Functions
 
         //Run Hash Function (Returns index for bucketList vector) Index is the hash value
@@ -120,12 +120,18 @@ class HashTable {
     };
     
     //Initializes Bucket
-    void HashTable::newBucket(string newDataFlightNumber, tuple<string, string, int> newFlightData){
+    void HashTable::NewBucket(string newDataFlightNumber, tuple<string, string, int> newFlightData){
 
     };
 
     //Initializes regular hash node/collision node
-    void HashTable::newHashNode(string newDataFlightNumber, tuple<string,string,int> newFlightData){
+    void HashTable::NewHashNode(string newDataFlightNumber, tuple<string,string,int> newFlightData){
+
+    };
+
+    //If max load factor is reached, rehash the vector
+    void HashTable::RehashFunction(){
+
 
     };
     
