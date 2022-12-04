@@ -15,7 +15,7 @@ int main(){
 }
 
 void getFlightDataFromFile(){
-    fstream file("test.csv", ios::in);
+    fstream file("2008.csv", ios::in);
     string names, line, data;
     vector<string> infoForDataStructures;
     if (file.is_open()){
