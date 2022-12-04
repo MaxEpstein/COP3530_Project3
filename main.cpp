@@ -68,12 +68,12 @@ void getFlightDataFromFile(graph &theGraph){
             holdingValues2.push_back(origin);
             holdingValues2.push_back(dest);
             holdingValues2.push_back(delayTime);
-            if (!isdigit(delayTime[0]))
+            if (!isdigit(delayTime[0]) && delayTime[0] != '-')
                 continue;
             theGraph.addEdge(make_tuple(origin, dest, delayTime, flightNumber));
 
             //used for testing
-            //cout << "Flight Number: " << flightNumber << " origin: " << origin << " dest: " << dest << " delay: " << delayTime << endl;
+            cout << "Flight Number: " << flightNumber << " origin: " << origin << " dest: " << dest << " delay: " << delayTime << endl;
             usefulData.push_back(holdingValues2);
 
         }

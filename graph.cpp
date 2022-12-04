@@ -56,6 +56,7 @@ class graph{
             }else{
                 return INT32_MAX;
             }
+            cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
             return tempDelay / tempDataStorage.size();
         };
 

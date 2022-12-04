@@ -5,6 +5,7 @@
         "string": "cpp",
         "vector": "cpp",
         "ostream": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "iosfwd": "cpp"
     }
 }

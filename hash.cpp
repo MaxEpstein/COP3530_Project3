@@ -16,11 +16,11 @@ struct HashNode {
             HashNode* next;
 
         //Hash Node Constructor: hashKey, tuple, and next node
-       HashNode::HashNode(string dateFlightNumberKey, tuple<string, string, int> newFlightData, HashNode* next){
-            this->hashKey = dateFlightNumberKey;
-            this->flightData = newFlightData;
-            this->next = next;
-       }
+    //    HashNode::HashNode(string dateFlightNumberKey, tuple<string, string, int> newFlightData, HashNode* next){
+    //         this->hashKey = dateFlightNumberKey;
+    //         this->flightData = newFlightData;
+    //         this->next = next;
+    //    }
 
 //===============Accessors==============//
        string getHashKey() const{

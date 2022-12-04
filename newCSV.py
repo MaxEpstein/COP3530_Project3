@@ -14,4 +14,4 @@ writer = csv.writer(file)
 writer.writerow(["Month", "Day", "FlightNum", "ArrDelay", "Origin", "Dest"])
 for i in range(len(data)):
    if (i < 200000):
-        writer.writerow([matrix[i,0], matrix[i,1], matrix[i,2], matrix[i,3], matrix[i,4], matrix[i,5]])
+        writer.writerow([str(matrix[i,0]), str(matrix[i,1]), str(matrix[i,2]), str(matrix[i,3]), str(matrix[i,4]), str(matrix[i,5])])
