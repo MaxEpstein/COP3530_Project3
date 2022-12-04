@@ -2,6 +2,9 @@
     "files.associations": {
         "xiosbase": "cpp",
         "tuple": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "vector": "cpp",
+        "ostream": "cpp",
+        "xhash": "cpp"
     }
 }

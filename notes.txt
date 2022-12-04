@@ -14,7 +14,8 @@ ideas for possible outputs:
     - total number of delays in 2008?
     - what contributed to most delays? (carrier, weather, NAS, security, late aircraft)
 
-
+- for flights with NA for flight delay and flights that never took off, they are ommited from all calculations as the flight never occured
+- csv file was cut down to 200,000 indexes from 2,400,000 for sake of runtime
 
 see time it takes to search in our 2008 dataset
     ie. print all delayed flights from X airline, search for all flights by X airline, search for all flights out of X airport, etc
