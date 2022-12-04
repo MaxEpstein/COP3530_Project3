@@ -12,6 +12,7 @@ class graph{
     private:
         // key = source
         // tuple: destination, delay, flight num
+        // 0: destination, 1: delay, 2: flightNum for tuple index
         unordered_map<string, vector<tuple<string, int, int>>> airportMap;
         vector<tuple<string, int, int>> tempDataStorage;
 
@@ -50,7 +51,7 @@ class graph{
             if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
                 tempDataStorage = findAirportItr->second;
                 for(int i = 0; i < tempDataStorage.size(); i++){
-                    tempDelay += get<2>(tempDataStorage.at(i));
+                    tempDelay += get<1>(tempDataStorage.at(i));
                 }
             }else{
                 return INT32_MAX;
@@ -60,11 +61,13 @@ class graph{
 
         double getAverageDelayTimeGivenTwo(string userSourceAirport, string userDestinationAirport){
             int tempDelay;
-            auto findAirportItr = airportMap.find(userAirport); //find iterator to given user airport
+            auto findAirportItr = airportMap.find(userSourceAirport); //find iterator to given user airport
             if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
                 tempDataStorage = findAirportItr->second;
                 for(int i = 0; i < tempDataStorage.size(); i++){
-                    tempDelay += get<2>(tempDataStorage.at(i));
+                    if(get<1>(tempDataStorage.at(i))){
+                        tempDelay += get<1>(tempDataStorage.at(i));
+                    }
                 }
             }else{
                 return INT32_MAX;
