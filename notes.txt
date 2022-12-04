@@ -19,3 +19,17 @@ ideas for possible outputs:
 see time it takes to search in our 2008 dataset
     ie. print all delayed flights from X airline, search for all flights by X airline, search for all flights out of X airport, etc
 
+
+graph:
+Flight number
+Origin
+Destination
+
+
+Average Delay Time of an Airport
+Average Delay time between two airports
+
+Hashmap:
+Key = Flight Number + Date
+data structure for tuple: <Flight
+
