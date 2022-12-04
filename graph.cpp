@@ -13,7 +13,7 @@ class graph{
 
     public:
         graph();
-        //
+        //tuple being passed: source, destination, delay, flightNum
         void addEdge(tuple<string, string, string, string> passedData){
             vector<tuple<string, int, int>> tempPassedDataStorage;
             //get all data from every index of tuple
