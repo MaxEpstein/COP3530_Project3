@@ -79,7 +79,7 @@ struct HashNode {
 
 
 //Hash Structure is a vector of head HashNodes
-//Separate Chaining Collision resolution
+//Separate Chaining Collision resolution + some linear probing
 class HashTable {
     public: 
         //Vector when initialized is 20, meaning there are 20 buckets in the hash map
@@ -92,23 +92,30 @@ class HashTable {
         double numberOfHashNodes;
         
     
-    //Creates empty vector of size initialBucket
+    //HashTable Constructor, initializes bucketList to size 20 [aka there are 20 buckets/vectors]
     HashTable::HashTable(){
         numberOfHashNodes = 0;
         currentLoadFactor = 0; 
-    
         //Initializing bucketList (Aka the bucket vectors)
         bucketList.resize(initialBucketListSize);
     };
 
     
     void HashTable::NewNode(tuple<string, string, int, string> newFlightData){
-        //Set Functions
+        tuple<string, string, int, string> tempData = newFlightData;
 
+        //HashTable uses origin airport as hashed key
+        string unhashedKey = get<0>(tempData);
+        
         //Run Hash Function (Returns index for bucketList vector) Index is the hash value
+        int hashedKey = HashFunction(unhashedKey, bucketList.size());
+
+
+
+
         //Either is the first element in bucket or is a collision (bucket node/ collision node)
 
-        //Change  node data in vector[index]
+        //Change node data in bucketList[vector][index]
         
 
     };
@@ -119,7 +126,7 @@ class HashTable {
     };
 
     //Initializes regular hash node/collision node
-    void HashTable::NewHashNode( tuple<string,string,int, string> newFlightData){
+    void HashTable::NewHashNode(tuple<string,string,int, string> newFlightData){
 
     };
 
@@ -128,9 +135,15 @@ class HashTable {
 
     };
 
-    //Used to decide bucket index in 
-    int HashTable::RehashFunction(){
-
+    //Used to decide bucket index, also 
+    //Hash Function = Sum of ASCII Values % number of buckets
+    int HashTable::HashFunction(string originAirport, int numberOfBuckets){
+        //Adding sum of ascii values
+        int sumOfASCII = 0;
+        for (char i : originAirport){
+            sumOfASCII += int(i);
+        }
+        return sumOfASCII % numberOfBuckets;
     }    
 };
 
