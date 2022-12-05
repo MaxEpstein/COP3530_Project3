@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -6,7 +7,7 @@
 
 #include "graph.cpp"
 //#include "hash.cpp"
-#pragma once
+
 using namespace std;
 void getFlightDataFromFile(graph &theGraph);
 int main(){
