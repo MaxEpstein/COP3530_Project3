@@ -56,24 +56,27 @@ class graph{
             }else{
                 return INT32_MAX;
             }
-            cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
+            //for testing purposes
+            //cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
             return tempDelay / tempDataStorage.size();
         };
 
         double getAverageDelayTimeGivenTwoAirportInputs(string userSourceAirport, string userDestinationAirport){
             double tempDelay = 0.00;
+            int counter = 0;
             auto findAirportItr = airportMap.find(userSourceAirport); //find iterator to given user airport
             if(findAirportItr != airportMap.end()){ //userAirport found, add up all delay tims in vector
                 tempDataStorage = findAirportItr->second;
                 for(int i = 0; i < tempDataStorage.size(); i++){
-                    if(get<1>(tempDataStorage.at(i))){
+                    if(get<0>(tempDataStorage.at(i)) == userDestinationAirport){
                         tempDelay += get<1>(tempDataStorage.at(i));
+                        counter++;
                     }
                 }
             }else{
                 return INT32_MAX;
             }
-            return tempDelay / tempDataStorage.size();
+            return tempDelay / counter;
         };
 
 

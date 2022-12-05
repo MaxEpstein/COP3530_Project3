@@ -2,9 +2,10 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <stdlib.h>
 
 #include "graph.cpp"
-#include "hash.cpp"
+//#include "hash.cpp"
 
 using namespace std;
 void getFlightDataFromFile(graph &theGraph);
@@ -16,19 +17,55 @@ int main(){
     getFlightDataFromFile(ourGraph);
 
     string userAirport;
+    int userInput;
     cout << "*****************************************************************************************" << endl;
     cout << "Welcome to the Flight Delay Calculator" << endl;
     cout << "*****************************************************************************************" << endl;
-    cout << "Please input the airport abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
-    cin >> userAirport;
-    double averageDelayTime = ourGraph.getAverageDelayTime(userAirport);
+    while (userInput != 4){
+        cout << "What would you like to do?" << endl;
+        cout << "1. List Available Airports" << endl;
+        cout << "2. Get Average Delay Time From Airport" << endl;
+        cout << "3. Get Average Delay Time Between Two Airports" << endl;
+        cout << "4. Exit" << endl;
+        cin >> userInput;
 
-    if (averageDelayTime == INT32_MAX){
-        cout << "No Data Found. Airport Does Not Exist" << endl;
+        if (userInput == 1){
+
+        }
+        if (userInput == 2){
+            cout << "Please input the airport abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
+        cin >> userAirport;
+        double averageDelayTime = ourGraph.getAverageDelayTime(userAirport);
+
+        if (averageDelayTime == INT32_MAX){
+            cout << "No Data Found. Airport Does Not Exist" << endl;
+        }
+        else 
+            cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes" << endl;
+        cout << " " << endl;
+        cout << " " << endl;
+        }
+        if (userInput == 3){
+            cout << "Please input the origin airport's abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
+            cin >> userAirport;
+            string dest;
+            cout << "Please input the destination airport's abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
+            cin >> dest;
+            double averageDelayTime = ourGraph.getAverageDelayTimeGivenTwoAirportInputs(userAirport, dest);
+
+            if (averageDelayTime == INT32_MAX){
+                cout << "No Data Found. Airport Does Not Exist" << endl;
+            }
+            else 
+                cout << "The average delay for a flight out of " << userAirport << " going to " << dest << " is: " << averageDelayTime << " minutes" << endl;
+            cout << " " << endl;
+            cout << " " << endl;
+        }
+        if (userInput == 4){
+            break;
+        }
     }
-    else 
-        cout << "The average delay for a flight out of: " << userAirport << " is " << averageDelayTime << " minutes" << endl;
-
+    
     return 0;
 }
 
