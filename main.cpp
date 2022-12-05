@@ -6,7 +6,7 @@
 
 #include "graph.cpp"
 //#include "hash.cpp"
-
+#pragma once
 using namespace std;
 void getFlightDataFromFile(graph &theGraph);
 int main(){

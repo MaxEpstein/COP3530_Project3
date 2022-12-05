@@ -2,7 +2,6 @@
 #include <tuple>
 #include <vector>
 #include <iostream>
-#define CAPACITY 100000
 using namespace std;
 
 //HashNode is a node in a linked list/bucket 
@@ -107,7 +106,7 @@ class HashTable {
         //HashTable uses origin airport as hashed key
         string unhashedKey = get<0>(tempData);
         
-        //Run Hash Function (Returns index for bucketList vector) Index is the hash value
+        //Run Hash Function (Returns index for bucketList vector) Index is the hash value, bucketList.size is the number current number of buckets
         int hashedKey = HashFunction(unhashedKey, bucketList.size());
 
 
@@ -135,7 +134,7 @@ class HashTable {
 
     };
 
-    //Used to decide bucket index, also 
+    //Used to decide bucket index
     //Hash Function = Sum of ASCII Values % number of buckets
     int HashTable::HashFunction(string originAirport, int numberOfBuckets){
         //Adding sum of ascii values
