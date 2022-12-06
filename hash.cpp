@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-//HashNode is a node 
+//HashNode is a node that contains the flight data of a single flight, it uses the origin airport as its hashKey
 struct HashNode {
         public:
             //Hash Node is a Linked List Node
@@ -184,11 +184,13 @@ class HashTable {
         double averageDelay = 0.00;
         //Hash the inputAirport to get index in HashTable
         int index = HashFunction(inputAirport, bucketList.size());
+        int numberOfFlights = 0;
 
         //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
         if (inputAirport == get<0>(bucketList[index][0].flightData)){ 
             for(int i = 0; i < bucketList[index].size(); i++){
                 sumOfAirportDelays += get<2>(bucketList[index][i].flightData); //Sum all the flight delays from inputAirport
+                numberOfFlights++;
             }
             averageDelay = sumOfAirportDelays / bucketList[index].size();
         }
@@ -198,11 +200,16 @@ class HashTable {
                     if(inputAirport == get<0>(bucketList[j][0].flightData)){
                         for (int k = 0; k < bucketList[j].size(); k++){
                             sumOfAirportDelays += get<2>(bucketList[j][k].flightData); //Sum all the flight delays from inputAirport
+                            numberOfFlights++;
                         }
                         averageDelay = sumOfAirportDelays / bucketList[j].size();
                     }
                 }
             }
+        }
+        if (numberOfFlights == 0){
+             cout << "There are no connection flights from " << inputAirport;
+            return INT32_MAX;
         }
         return averageDelay; 
     }
@@ -232,6 +239,7 @@ class HashTable {
                         for (int k = 0; k < bucketList[j].size(); k++){
                             if (destination == get<1>(bucketList[j][k].flightData)){ //check destination of flight
                                 sumOfAirportDelays += get<2>(bucketList[j][k].flightData); //Sum all the flight delays from origin to destination
+                                numberOfFlights++;
                             }
                         }
                         averageDelay = sumOfAirportDelays / numberOfFlights;
@@ -243,7 +251,7 @@ class HashTable {
         //If no connecting flight inform users, return -1
         if (numberOfFlights = 0){
             cout << "There are no connection flights from " << origin << " to " << destination << endl;
-            return -1.00;
+            return INT32_MAX;
         }
         return averageDelay;
     }
