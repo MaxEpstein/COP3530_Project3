@@ -25,9 +25,9 @@ struct HashNode {
             
         }
         //Hash Node Constructor: hashKey, tuple, and next node
-        HashNode::HashNode(tuple<string, string, int, string> newFlightData){
+        HashNode::HashNode(tuple<string, string, int, string> newFlightData, int newHashedKey){
             this->flightData = newFlightData;
-            this->hashKey = get<3>(newFlightData);
+            this->hashKey = newHashedKey;
        }
 
 //===============Accessors==============//
@@ -108,41 +108,54 @@ class HashTable {
         
         //Run Hash Function (Returns index for bucketList vector) Index is the hash value, bucketList.size is the number current number of buckets
         int hashedKey = HashFunction(unhashedKey, bucketList.size());
-
+        bool placed = false; 
         if (bucketList[hashedKey].empty()){
             //If vector[hashKey] is empty, add a bucket's head node
-            NewBucket(newFlightData, bucketList);
+            NewBucket(hashedKey, newFlightData, bucketList);
+            placed = true;
         }
-        else{
+        else{ //**COLLISION OCCURRED**, two different types: same airport, different airport
             //If vector[hashedKey] is not empty, check if origin airport matches bucket head node's airport
-            if (get<0>(newFlightData) == get<0>(bucketList[hashedKey][0].flightData)){
-                NewHashNode(newFlightData, bucketList);
+            if (get<0>(newFlightData) == get<0>(bucketList[hashedKey][0].flightData)){ //same origin airport
+                NewHashNode(hashedKey, newFlightData, bucketList);
+                placed = true;
             }
             //If not linear probe to find next empty bucket
+            else{
+                for (int i = hashedKey + 1; i < bucketList.size(); i++){
+                if (bucketList[i].empty()){
+                    NewBucket(hashedKey,newFlightData, bucketList);
+                    placed = true;
+                    }
+                }
+            }
         }
-
-        
-
-
-        //Either is the first element in bucket or is a collision (bucket node/ collision node)
-
-        //Change node data in bucketList[vector][index]
-        
+        if (placed == false){
+            RehashTable(newFlightData, bucketList); //after rehash, just return
+            numberOfHashNodes++;
+            return;
+        }
+        numberOfHashNodes++; //increment number of nodes to check load factor
+        //Check load factor, if reached rehash
+        currentLoadFactor = (double) numberOfHashNodes / bucketList.size();
+        if (currentLoadFactor >= maxLoadFactor){
+            RehashTable(newFlightData, bucketList);
+        }
 
     };
     
-    //Initializes Bucket
-    void HashTable::NewBucket(tuple<string, string, int, string> newFlightData, vector<vector<HashNode>>& tempBucketList){
-
+    //Initializes Bucket at key index
+    void HashTable::NewBucket(int key, tuple<string, string, int, string> newFlightData, vector<vector<HashNode>>& tempBucketList){
+        tempBucketList[key].push_back(HashNode())
     };
 
     //Initializes regular hash node/collision node
-    void HashTable::NewHashNode(tuple<string,string,int, string> newFlightData, vector<vector<HashNode>>& tempBucketList){
+    void HashTable::NewHashNode(int key, tuple<string,string,int, string> newFlightData, vector<vector<HashNode>>& tempBucketList){
 
     };
 
     //If max load factor is reached, rehash the vector
-    void HashTable::RehashTable(){
+    void HashTable::RehashTable(tuple<string,string,int, string> newFlightData ,vector<vector<HashNode>>& tempBucketList){
 
     };
 
