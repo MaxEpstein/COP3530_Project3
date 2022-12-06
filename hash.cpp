@@ -203,12 +203,13 @@ class HashTable {
                             numberOfFlights++;
                         }
                         averageDelay = sumOfAirportDelays / bucketList[j].size();
+                        break;
                     }
                 }
             }
         }
         if (numberOfFlights == 0){
-             cout << "There are no connection flights from " << inputAirport;
+             //cout << "There are no connection flights from " << inputAirport;
             return INT32_MAX;
         }
         return averageDelay; 
@@ -250,7 +251,7 @@ class HashTable {
 
         //If no connecting flight inform users, return -1
         if (numberOfFlights = 0){
-            cout << "There are no connection flights from " << origin << " to " << destination << endl;
+           // cout << "There are no connection flights from " << origin << " to " << destination << endl;
             return INT32_MAX;
         }
         return averageDelay;

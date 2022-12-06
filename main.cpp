@@ -69,7 +69,7 @@ int main(){
             cout << "No Data Found. Airport Does Not Exist" << endl;
         }
         else 
-            cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes" << endl;
+            cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes (graph)" << endl;
         
 
         //running with hashmap
@@ -83,7 +83,7 @@ int main(){
             cout << "No Data Found. Airport Does Not Exist" << endl;
         }
         else 
-            cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime2 << " minutes" << endl;
+            cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime2 << " minutes (hashmap)" << endl;
 
         cout << "Time Elapsed using Graph: " << elapsed.count() << " microseconds" << endl;
         cout << "Time Elapsed using HashMap: " << elapsed2.count() << " microseconds" << endl;
@@ -105,11 +105,26 @@ int main(){
             auto elapsed = chrono::duration_cast<std::chrono::microseconds>(end - start);
 
             if (averageDelayTime == INT32_MAX){
-                cout << "No Data Found. Airport Does Not Exist" << endl;
+                cout << "No Data Found. Flight Route Does Not Exist" << endl;
             }
             else 
-                cout << "The average delay for a flight out of " << userAirport << " going to " << dest << " is: " << averageDelayTime << " minutes" << endl;
-            cout << "Time Elapsed: " << elapsed.count() << " microseconds" << endl;
+                cout << "The average delay for a flight out of " << userAirport << " going to " << dest << " is: " << averageDelayTime << " minutes (graph)" << endl;
+
+                //running with hashmap
+            start = chrono::steady_clock::now();
+            double averageDelayTime2 = hash.GetAirportDelayBetweenAirports(userAirport, dest);
+            end = chrono::steady_clock::now();
+            auto elapsed2 = chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+
+            if (averageDelayTime2 == INT32_MAX){
+                cout << "No Data Found. Flight Route Does Not Exist" << endl;
+            }
+            else 
+                cout << "The average delay for a flight out of " << userAirport << " going to " << dest << " is: " << averageDelayTime << " minutes (hashmap)" << endl;
+
+            cout << "Time Elapsed using Graph: " << elapsed.count() << " microseconds" << endl;
+            cout << "Time Elapsed using HashMap: " << elapsed2.count() << " microseconds" << endl;
             cout << " " << endl;
             cout << " " << endl;
         }
@@ -123,7 +138,7 @@ int main(){
 
 //need to pass in graph and hash data types to initialize the data structures
 void getFlightDataFromFile(graph &theGraph){
-    fstream file("Data/New2008.csv", ios::in);
+    fstream file("Data/NewTest.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
@@ -171,7 +186,7 @@ void getFlightDataFromFile(graph &theGraph){
 }
 
 void getFlightDataFromFile(HashTable &theHash){
-    fstream file("Data/New2008.csv", ios::in);
+    fstream file("Data/NewTest.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
