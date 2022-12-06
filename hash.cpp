@@ -29,51 +29,6 @@ struct HashNode {
             this->flightData = newFlightData;
             this->hashKey = newHashedKey;
        }
-
-//===============Accessors==============//
-       string GetHashKey() const{
-            return hashKey;
-       }
-    
-       string GetOriginAirport() const{
-            return get<0>(flightData);
-       }
-
-       string GetDestinationAirport() const{
-            return get<1>(flightData);
-       }
-       
-       int GetFlightDelayTime() const{
-            return get<2>(flightData);
-       }
-
-       string GetFlightNumber() const{
-            return get<3>(flightData);
-       }
-
-
-//===============Setters==============//
-
-        void SetHashKey(string newHashKey){
-            this->hashKey = newHashKey;
-        }
-
-        void SetOriginAirport(string newOrigin){
-            get<0>(this->flightData) = newOrigin;
-        }
-
-        void SetDestinationAirport(string newDestination){
-            get<1>(this->flightData) = newDestination;
-        }
-
-        void SetFlightDelay(int newDelayTime){
-            get<2>(this->flightData) = newDelayTime;
-        }
-        
-        void SetNext(string newFlightNumber) {
-            get<3>(this->flightData) = newFlightNumber;
-        }
-        
  };
 
 
@@ -172,13 +127,13 @@ class HashTable {
                 //check if newBucketList[rehashKey] is empty
                 if (newBucketList[rehashKey].empty()){
                     //if it is, initialize with old bucket vector
-                    newBucketList[rehashKey] == tempBucketList[currentIndex];
+                    newBucketList[rehashKey] = tempBucketList[currentIndex];
                 }
                 else {
                     //if it isn't, linear probe to find next
                     for (int i = rehashKey + 1; i < newBucketList.size(); i++){
                         if(newBucketList[i].empty()){
-                            newBucketList[i] == tempBucketList[currentIndex];
+                            newBucketList[i] = tempBucketList[currentIndex];
                         }
                     }
                 }
