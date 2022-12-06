@@ -15,7 +15,8 @@ using namespace std;
 
 //clock reference https://stackoverflow.com/questions/15235218/c-timer-milliseconds
 
-void getFlightDataFromFile(graph &theGraph, HashTable &theHash);
+void getFlightDataFromFile(graph &theGraph);
+void getFlightDataFromFile(HashTable &theHash);
 
 int main(){
     //hash
@@ -24,10 +25,19 @@ int main(){
     graph ourGraph;
     HashTable hash;
 
-    getFlightDataFromFile(ourGraph, hash);
+    auto graphStart = chrono::steady_clock::now();
+    getFlightDataFromFile(ourGraph);
+    auto graphEnd = chrono::steady_clock::now();
+    auto graphElapsed = chrono::duration_cast<std::chrono::microseconds>(graphEnd - graphStart);
 
-    clock_t time1;
-    clock_t time2;
+    cout << "Graph initialization time: " << graphElapsed.count() << " microseconds" << endl;
+
+    auto hashStart = chrono::steady_clock::now();
+    getFlightDataFromFile(hash);
+    auto hashEnd = chrono::steady_clock::now();
+    auto hashElapsed = chrono::duration_cast<std::chrono::microseconds>(hashEnd - hashStart);
+
+    cout << "HashTable initialization time: " << hashElapsed.count() << " microseconds" << endl;
 
     string userAirport;
     int userInput;
@@ -60,7 +70,7 @@ int main(){
         }
         else 
             cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes" << endl;
-        cout << "Time Elapsed using Graph: " << elapsed.count() << " miliseconds" << endl;
+        
 
         //running with hashmap
         start = chrono::steady_clock::now();
@@ -74,7 +84,9 @@ int main(){
         }
         else 
             cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime2 << " minutes" << endl;
-        cout << "Time Elapsed using HashMap: " << elapsed2.count() << " miliseconds" << endl;
+
+        cout << "Time Elapsed using Graph: " << elapsed.count() << " microseconds" << endl;
+        cout << "Time Elapsed using HashMap: " << elapsed2.count() << " microseconds" << endl;
 
         cout << " " << endl;
         cout << " " << endl;
@@ -97,7 +109,7 @@ int main(){
             }
             else 
                 cout << "The average delay for a flight out of " << userAirport << " going to " << dest << " is: " << averageDelayTime << " minutes" << endl;
-            cout << "Time Elapsed: " << elapsed.count() << " miliseconds" << endl;
+            cout << "Time Elapsed: " << elapsed.count() << " microseconds" << endl;
             cout << " " << endl;
             cout << " " << endl;
         }
@@ -110,8 +122,8 @@ int main(){
 }
 
 //need to pass in graph and hash data types to initialize the data structures
-void getFlightDataFromFile(graph &theGraph, HashTable &theHash){
-    fstream file("Data/NewTest.csv", ios::in);
+void getFlightDataFromFile(graph &theGraph){
+    fstream file("Data/New2008.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
@@ -148,6 +160,53 @@ void getFlightDataFromFile(graph &theGraph, HashTable &theHash){
             if (!isdigit(delayTime[0]) && delayTime[0] != '-')
                 continue;
             theGraph.addEdge(make_tuple(origin, dest, delayTime, flightNumber));
+
+            //used for testing
+            //cout << "Flight Number: " << flightNumber << " origin: " << origin << " dest: " << dest << " delay: " << delayTime << endl;
+            usefulData.push_back(holdingValues2);
+
+        }
+
+    }
+}
+
+void getFlightDataFromFile(HashTable &theHash){
+    fstream file("Data/New2008.csv", ios::in);
+
+    string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
+    string test;
+
+    vector<string> holdingValues;
+    vector<vector<string>> usefulData;
+    //we want columns 15 (delay time), 17(origin/source), 18(destination)
+    int i = 0;
+    if (file.is_open()){
+        getline(file,entireLine);
+        while (getline(file, entireLine)){
+            holdingValues.clear();
+
+            stringstream s(entireLine);
+
+            while (getline(s, test, ',')){
+                holdingValues.push_back(test);
+
+            }
+            Month = holdingValues[0];
+            Day = holdingValues[1];
+            flightNumber = holdingValues[2];
+            origin = holdingValues[4];
+            dest = holdingValues[5];
+            delayTime = holdingValues[3];
+
+            vector<string> holdingValues2;
+            holdingValues2.push_back(Month);
+            holdingValues2.push_back(Day);
+            holdingValues2.push_back(flightNumber);
+            holdingValues2.push_back(origin);
+            holdingValues2.push_back(dest);
+            holdingValues2.push_back(delayTime);
+            if (!isdigit(delayTime[0]) && delayTime[0] != '-')
+                continue;
             theHash.NewNode(make_tuple(origin, dest, stoi(delayTime), flightNumber));
 
             //used for testing
