@@ -16,6 +16,8 @@ ideas for possible outputs:
 
 - for flights with NA for flight delay and flights that never took off, they are ommited from all calculations as the flight never occured
 - csv file was cut down to 200,000 indexes from 2,400,000 for sake of runtime
+- includes all commerical domestic flights from january 1st, 2008 to jan 20th, 2008
+- over 200,000
 
 see time it takes to search in our 2008 dataset
     ie. print all delayed flights from X airline, search for all flights by X airline, search for all flights out of X airport, etc
