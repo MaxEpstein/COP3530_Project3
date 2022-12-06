@@ -218,8 +218,8 @@ class HashTable {
     int HashFunction(string originAirport, int numberOfBuckets){
         //Adding sum of ascii values
         int sumOfASCII = 0;
-        for (char i : originAirport){
-            sumOfASCII += int(i);
+        for (int i = 0; i < originAirport.size(); i++){
+            sumOfASCII += int(originAirport[i]);
         }
         return sumOfASCII % numberOfBuckets;
     }    

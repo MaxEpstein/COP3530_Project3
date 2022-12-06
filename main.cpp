@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -34,8 +35,8 @@ int main(){
         }
         if (userInput == 2){
             cout << "Please input the airport abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
-        cin >> userAirport;
-        double averageDelayTime = ourGraph.getAverageDelayTime(userAirport);
+            cin >> userAirport;
+            double averageDelayTime = ourGraph.getAverageDelayTime(userAirport);
 
         if (averageDelayTime == INT32_MAX){
             cout << "No Data Found. Airport Does Not Exist" << endl;
