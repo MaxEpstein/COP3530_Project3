@@ -113,6 +113,26 @@ class HashTable {
         vector<vector<HashNode>> newBucketList;
         newBucketList.resize(tempBucketList.size() * 2);
 
+        int newKey = HashFunction(get<0>(newFlightData), newBucketList.size());
+        if (newBucketList[newKey].empty()){
+            //If vector[hashKey] is empty, add a bucket's head node
+            NewBucket(newKey, newFlightData, newBucketList);
+        }
+        else{ //**COLLISION OCCURRED**, two different types: same airport, different airport
+            //If vector[hashedKey] is not empty, check if origin airport matches bucket head node's airport
+            if (get<0>(newFlightData) == get<0>(newBucketList[newKey][0].flightData)){ //same origin airport
+                NewHashNode(newKey, newFlightData, newBucketList);
+            }
+            //If not linear probe to find next empty bucket
+            else{
+                for (int i = newKey + 1; i < newBucketList.size(); i++){
+                if (newBucketList[i].empty()){
+                    NewBucket(newKey,newFlightData, newBucketList);
+                    }
+                }
+            }
+        }
+
         //Rehash keys in old hash table
         string tempAirport;
         int rehashKey;
@@ -140,26 +160,6 @@ class HashTable {
             currentIndex++;
         }
 
-        //Now enter in newFlightData
-        int newKey = HashFunction(get<0>(newFlightData), newBucketList.size());
-        if (newBucketList[newKey].empty()){
-            //If vector[hashKey] is empty, add a bucket's head node
-            NewBucket(newKey, newFlightData, newBucketList);
-        }
-        else{ //**COLLISION OCCURRED**, two different types: same airport, different airport
-            //If vector[hashedKey] is not empty, check if origin airport matches bucket head node's airport
-            if (get<0>(newFlightData) == get<0>(newBucketList[newKey][0].flightData)){ //same origin airport
-                NewHashNode(newKey, newFlightData, newBucketList);
-            }
-            //If not linear probe to find next empty bucket
-            else{
-                for (int i = newKey + 1; i < newBucketList.size(); i++){
-                if (newBucketList[i].empty()){
-                    NewBucket(newKey,newFlightData, newBucketList);
-                    }
-                }
-            }
-        }
         //clear old bucketList
         bucketList.clear();
         //initialize with newBucketList, increment numberOfHashNodes
