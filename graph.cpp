@@ -65,7 +65,7 @@ class graph{
                 return INT32_MAX; //avg delayTime very unlikely to be upwards of 2 billion, used for error checking
             }
             //for testing purposes
-            cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
+            //cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
             return tempDelay / tempDataStorage.size();
         };
 

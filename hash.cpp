@@ -171,7 +171,7 @@ class HashTable {
         //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
         if (inputAirport == get<0>(bucketList[index][0].flightData)){ 
             for(int i = 0; i < bucketList[index].size(); i++){
-                cout << "Origin: " << get<0>(bucketList[index][i].flightData) << " dest: " << get<1>(bucketList[index][i].flightData) << " Delay: " << get<2>(bucketList[index][i].flightData) << endl;
+                //cout << "Origin: " << get<0>(bucketList[index][i].flightData) << " dest: " << get<1>(bucketList[index][i].flightData) << " Delay: " << get<2>(bucketList[index][i].flightData) << endl;
                 sumOfAirportDelays += get<2>(bucketList[index][i].flightData);
             }
             size = bucketList[index].size();
@@ -190,7 +190,7 @@ class HashTable {
                 }
             }
         }
-        cout << "Total Delay: " << sumOfAirportDelays << " size: " << size << endl;
+        //cout << "Total Delay: " << sumOfAirportDelays << " size: " << size << endl;
         return averageDelay; 
     }    
 };
