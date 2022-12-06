@@ -16,12 +16,17 @@ class graph{
         // 0: destination, 1: delay, 2: flightNum for tuple index
         unordered_map<string, vector<tuple<string, int, int>>> airportMap;
         vector<tuple<string, int, int>> tempDataStorage;
+        float avgDelay;
+        int totalFlights;
 
     public:
 
         //
 
-        graph(){};
+        graph(){
+            avgDelay = 0;
+            totalFlights = 0;
+        };
         //tuple being passed: source, destination, delay, flightNum
         void addEdge(tuple<string, string, string, string> passedData){
             vector<tuple<string, int, int>> tempDataStorage = {};
@@ -74,11 +79,18 @@ class graph{
                         counter++;
                     }
                 }
+                if(counter == 0){
+                    return INT32_MAX;
+                }
             }else{
                 return INT32_MAX;
             }
             return tempDelay / counter;
         };
+
+        double getTotalAvgDelay(){
+            return avgDelay;
+        }
 
 
 
