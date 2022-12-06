@@ -16,7 +16,7 @@ struct HashNode {
            
 
         //Default HashNode Constructor (NULL)
-        HashNode::HashNode(){
+        HashNode(){
             this->hashKey = " ";
             get<0>(this->flightData) = " ";
             get<1>(this->flightData) = " ";
@@ -25,7 +25,7 @@ struct HashNode {
             
         }
         //Hash Node Constructor: hashKey, tuple, and next node
-        HashNode::HashNode(tuple<string, string, int, string> newFlightData, int newHashedKey){
+        HashNode(tuple<string, string, int, string> newFlightData, int newHashedKey){
             this->flightData = newFlightData;
             this->hashKey = newHashedKey;
        }
@@ -218,8 +218,8 @@ class HashTable {
     int HashFunction(string originAirport, int numberOfBuckets){
         //Adding sum of ascii values
         int sumOfASCII = 0;
-        for (char i : originAirport){
-            sumOfASCII += int(i);
+        for (int i = 0; i < originAirport.size(); i++){
+            sumOfASCII += int(originAirport[i]);
         }
         return sumOfASCII % numberOfBuckets;
     }    
