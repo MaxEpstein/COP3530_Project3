@@ -5,7 +5,6 @@
 using namespace std;
 
 //HashNode is a node 
-
 struct HashNode {
         public:
             //Hash Node is a Linked List Node
@@ -177,6 +176,35 @@ class HashTable {
             sumOfASCII += int(originAirport[i]);
         }
         return sumOfASCII % numberOfBuckets;
+    }
+
+    //Function that gets the average delay arrival time from an inputted airport
+    double GetAirportAverageDelay(string inputAirport){
+        double sumOfAirportDelays = 0.00;
+        double averageDelay = 0.00;
+        //Hash the inputAirport to get index in HashTable
+        int index = HashFunction(inputAirport, bucketList.size());
+
+        //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
+        if (inputAirport == get<0>(bucketList[index][0].flightData)){ 
+            for(int i = 0; i < bucketList[index].size(); i++){
+                sumOfAirportDelays += get<2>(bucketList[index][i].flightData);
+            }
+            averageDelay = sumOfAirportDelays / bucketList[index].size();
+        }
+        else{ //If isn't a collision occurred during intializing, linear probe
+            for (int j = index + 1; j < bucketList.size(); j++){
+                if(bucketList[j].empty() == false){
+                    if(inputAirport == get<0>(bucketList[j][0].flightData)){
+                        for (int k = 0; k < bucketList[j].size(); k++){
+                            sumOfAirportDelays += get<2>(bucketList[j][k].flightData);
+                        }
+                        averageDelay = sumOfAirportDelays / bucketList[j].size();
+                    }
+                }
+            }
+        }
+        return averageDelay; 
     }    
 };
 
