@@ -1,4 +1,3 @@
-#pragma once
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -13,6 +12,9 @@
 #include "hash.cpp"
 
 using namespace std;
+
+//clock reference https://stackoverflow.com/questions/15235218/c-timer-milliseconds
+
 void getFlightDataFromFile(graph &theGraph, HashTable &theHash);
 
 int main(){
@@ -58,7 +60,22 @@ int main(){
         }
         else 
             cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes" << endl;
-        cout << "Time Elapsed: " << elapsed.count() << " miliseconds" << endl;
+        cout << "Time Elapsed using Graph: " << elapsed.count() << " miliseconds" << endl;
+
+        //running with hashmap
+        start = chrono::steady_clock::now();
+        double averageDelayTime2 = hash.GetAirportAverageDelay(userAirport);
+        end = chrono::steady_clock::now();
+        auto elapsed2 = chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+
+        if (averageDelayTime2 == INT32_MAX){
+            cout << "No Data Found. Airport Does Not Exist" << endl;
+        }
+        else 
+            cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime2 << " minutes" << endl;
+        cout << "Time Elapsed using HashMap: " << elapsed2.count() << " miliseconds" << endl;
+
         cout << " " << endl;
         cout << " " << endl;
         }
@@ -94,7 +111,7 @@ int main(){
 
 //need to pass in graph and hash data types to initialize the data structures
 void getFlightDataFromFile(graph &theGraph, HashTable &theHash){
-    fstream file("NewTest.csv", ios::in);
+    fstream file("Data/NewTest.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
