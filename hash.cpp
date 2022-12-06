@@ -184,12 +184,14 @@ class HashTable {
         double averageDelay = 0.00;
         //Hash the inputAirport to get index in HashTable
         int index = HashFunction(inputAirport, bucketList.size());
+        int size;
 
         //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
         if (inputAirport == get<0>(bucketList[index][0].flightData)){ 
             for(int i = 0; i < bucketList[index].size(); i++){
                 sumOfAirportDelays += get<2>(bucketList[index][i].flightData);
             }
+            size = bucketList[index].size();
             averageDelay = sumOfAirportDelays / bucketList[index].size();
         }
         else{ //If isn't a collision occurred during intializing, linear probe to find correct airport
@@ -199,11 +201,13 @@ class HashTable {
                         for (int k = 0; k < bucketList[j].size(); k++){
                             sumOfAirportDelays += get<2>(bucketList[j][k].flightData);
                         }
+                        size = bucketList[j].size();
                         averageDelay = sumOfAirportDelays / bucketList[j].size();
                     }
                 }
             }
         }
+        cout << "Total Delay: " << sumOfAirportDelays << " size: " << size << endl;
         return averageDelay; 
     }    
 };
