@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-//HashNode is a node in a linked list/bucket 
+//HashNode is a node 
 
 struct HashNode {
         public:
@@ -109,7 +109,19 @@ class HashTable {
         //Run Hash Function (Returns index for bucketList vector) Index is the hash value, bucketList.size is the number current number of buckets
         int hashedKey = HashFunction(unhashedKey, bucketList.size());
 
+        if (bucketList[hashedKey].empty()){
+            //If vector[hashKey] is empty, add a bucket's head node
+            NewBucket(newFlightData, bucketList);
+        }
+        else{
+            //If vector[hashedKey] is not empty, check if origin airport matches bucket head node's airport
+            if (get<0>(newFlightData) == get<0>(bucketList[hashedKey][0].flightData)){
+                NewHashNode(newFlightData, bucketList);
+            }
+            //If not linear probe to find next empty bucket
+        }
 
+        
 
 
         //Either is the first element in bucket or is a collision (bucket node/ collision node)
@@ -120,12 +132,12 @@ class HashTable {
     };
     
     //Initializes Bucket
-    void HashTable::NewBucket(tuple<string, string, int, string> newFlightData){
+    void HashTable::NewBucket(tuple<string, string, int, string> newFlightData, vector<vector<HashNode>>& tempBucketList){
 
     };
 
     //Initializes regular hash node/collision node
-    void HashTable::NewHashNode(tuple<string,string,int, string> newFlightData){
+    void HashTable::NewHashNode(tuple<string,string,int, string> newFlightData, vector<vector<HashNode>>& tempBucketList){
 
     };
 

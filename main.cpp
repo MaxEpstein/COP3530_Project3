@@ -43,8 +43,8 @@ int main(){
         }
         else 
             cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes" << endl;
-        cout << " " << endl;
-        cout << " " << endl;
+            cout << " " << endl;
+            cout << " " << endl;
         }
         if (userInput == 3){
             cout << "Please input the origin airport's abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
