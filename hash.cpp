@@ -153,10 +153,18 @@ class HashTable {
         }
 
 
-        //clear old bucketList
-        bucketList.swap(vector<vector<HashNode>>());
+        //clearing/freeing up memory from bucketList
+        for (int j = 0; j < bucketList.size(); j++){
+            bucketList[j].clear(); 
+        }
+        bucketList.clear();
         //initialize with newBucketList
         bucketList = newBucketList;
+        //clearing/freeing up memory from bucketList
+        for (int j = 0; j < newBucketList.size(); j++){
+            newBucketList[j].clear(); 
+        }
+        newBucketList.clear();
     };
 
     //Used to decide bucket index
