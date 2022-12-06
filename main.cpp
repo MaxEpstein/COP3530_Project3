@@ -4,18 +4,28 @@
 #include <sstream>
 #include <vector>
 #include <stdlib.h>
+#include <time.h>
+#include <cmath>
+#include <ctime>
+#include <chrono>
 
 #include "graph.cpp"
-//#include "hash.cpp"
+#include "hash.cpp"
 
 using namespace std;
-void getFlightDataFromFile(graph &theGraph);
+void getFlightDataFromFile(graph &theGraph, HashTable &theHash);
+
 int main(){
     //hash
     //graph
-    graph ourGraph;
 
-    getFlightDataFromFile(ourGraph);
+    graph ourGraph;
+    HashTable hash;
+
+    getFlightDataFromFile(ourGraph, hash);
+
+    clock_t time1;
+    clock_t time2;
 
     string userAirport;
     int userInput;
@@ -35,30 +45,42 @@ int main(){
         }
         if (userInput == 2){
             cout << "Please input the airport abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
-            cin >> userAirport;
-            double averageDelayTime = ourGraph.getAverageDelayTime(userAirport);
+        cin >> userAirport;
+
+        auto start = chrono::steady_clock::now();
+        double averageDelayTime = ourGraph.getAverageDelayTime(userAirport);
+        auto end = chrono::steady_clock::now();
+        auto elapsed = chrono::duration_cast<std::chrono::microseconds>(end - start);
+
 
         if (averageDelayTime == INT32_MAX){
             cout << "No Data Found. Airport Does Not Exist" << endl;
         }
         else 
             cout << "The average delay for a flight out of " << userAirport << " is: " << averageDelayTime << " minutes" << endl;
-            cout << " " << endl;
-            cout << " " << endl;
+        cout << "Time Elapsed: " << elapsed.count() << " miliseconds" << endl;
+        cout << " " << endl;
+        cout << " " << endl;
         }
+
         if (userInput == 3){
             cout << "Please input the origin airport's abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
             cin >> userAirport;
             string dest;
             cout << "Please input the destination airport's abreviation (ex: MCO, ATL, MIA) that you would like to calculate" << endl;
             cin >> dest;
+
+            auto start = chrono::steady_clock::now();
             double averageDelayTime = ourGraph.getAverageDelayTimeGivenTwoAirportInputs(userAirport, dest);
+            auto end = chrono::steady_clock::now();
+            auto elapsed = chrono::duration_cast<std::chrono::microseconds>(end - start);
 
             if (averageDelayTime == INT32_MAX){
                 cout << "No Data Found. Airport Does Not Exist" << endl;
             }
             else 
                 cout << "The average delay for a flight out of " << userAirport << " going to " << dest << " is: " << averageDelayTime << " minutes" << endl;
+            cout << "Time Elapsed: " << elapsed.count() << " miliseconds" << endl;
             cout << " " << endl;
             cout << " " << endl;
         }
@@ -71,7 +93,7 @@ int main(){
 }
 
 //need to pass in graph and hash data types to initialize the data structures
-void getFlightDataFromFile(graph &theGraph){
+void getFlightDataFromFile(graph &theGraph, HashTable &theHash){
     fstream file("NewTest.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
@@ -109,9 +131,10 @@ void getFlightDataFromFile(graph &theGraph){
             if (!isdigit(delayTime[0]) && delayTime[0] != '-')
                 continue;
             theGraph.addEdge(make_tuple(origin, dest, delayTime, flightNumber));
+            theHash.NewNode(make_tuple(origin, dest, stoi(delayTime), flightNumber));
 
             //used for testing
-            cout << "Flight Number: " << flightNumber << " origin: " << origin << " dest: " << dest << " delay: " << delayTime << endl;
+            //cout << "Flight Number: " << flightNumber << " origin: " << origin << " dest: " << dest << " delay: " << delayTime << endl;
             usefulData.push_back(holdingValues2);
 
         }
