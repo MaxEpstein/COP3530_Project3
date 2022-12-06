@@ -192,7 +192,7 @@ class HashTable {
             }
             averageDelay = sumOfAirportDelays / bucketList[index].size();
         }
-        else{ //If isn't a collision occurred during intializing, linear probe
+        else{ //If isn't a collision occurred during intializing, linear probe to find correct airport
             for (int j = index + 1; j < bucketList.size(); j++){
                 if(bucketList[j].empty() == false){
                     if(inputAirport == get<0>(bucketList[j][0].flightData)){
