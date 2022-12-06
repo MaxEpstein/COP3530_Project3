@@ -113,7 +113,6 @@ class HashTable {
         vector<vector<HashNode>> newBucketList;
         newBucketList.resize(tempBucketList.size() * 2);
 
-
         //Rehash keys in old hash table
         string tempAirport;
         int rehashKey;
@@ -144,8 +143,7 @@ class HashTable {
 
         //clear old bucketList
         bucketList.clear();
-        //initialize with newBucketList, increment numberOfHashNodes
-        numberOfHashNodes++;
+        //initialize with newBucketList
         bucketList = newBucketList;
     };
 
@@ -166,15 +164,12 @@ class HashTable {
         double averageDelay = 0.00;
         //Hash the inputAirport to get index in HashTable
         int index = HashFunction(inputAirport, bucketList.size());
-        int size;
 
         //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
         if (inputAirport == get<0>(bucketList[index][0].flightData)){ 
             for(int i = 0; i < bucketList[index].size(); i++){
-                //cout << "Origin: " << get<0>(bucketList[index][i].flightData) << " dest: " << get<1>(bucketList[index][i].flightData) << " Delay: " << get<2>(bucketList[index][i].flightData) << endl;
-                sumOfAirportDelays += get<2>(bucketList[index][i].flightData);
+                sumOfAirportDelays += get<2>(bucketList[index][i].flightData); //Sum all the flight delays from inputAirport
             }
-            size = bucketList[index].size();
             averageDelay = sumOfAirportDelays / bucketList[index].size();
         }
         else{ //If isn't a collision occurred during intializing, linear probe to find correct airport
@@ -182,16 +177,56 @@ class HashTable {
                 if(bucketList[j].empty() == false){
                     if(inputAirport == get<0>(bucketList[j][0].flightData)){
                         for (int k = 0; k < bucketList[j].size(); k++){
-                            sumOfAirportDelays += get<2>(bucketList[j][k].flightData);
+                            sumOfAirportDelays += get<2>(bucketList[j][k].flightData); //Sum all the flight delays from inputAirport
                         }
-                        size = bucketList[j].size();
                         averageDelay = sumOfAirportDelays / bucketList[j].size();
                     }
                 }
             }
         }
-        //cout << "Total Delay: " << sumOfAirportDelays << " size: " << size << endl;
         return averageDelay; 
-    }    
+    }
+
+    double GetAirportDelayBetweenAirports(string origin, string destination){
+        double sumOfAirportDelays = 0.00;
+        double averageDelay = 0.00;
+        //Hash the inputAirport to get index in HashTable
+        int originIndex = HashFunction(origin, bucketList.size());
+        //numberOfFlights is the number of flights from origin to destination
+        int numberOfFlights = 0;
+        
+        //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
+        if (origin == get<0>(bucketList[originIndex][0].flightData)){ 
+            for(int i = 0; i < bucketList[originIndex].size(); i++){
+                if (destination == get<1>(bucketList[originIndex][i].flightData)){
+                    sumOfAirportDelays += get<2>(bucketList[originIndex][i].flightData); //Sum all the flight delays from origin to destination
+                    numberOfFlights++; //add to number of flights between airports
+                }
+            }
+            averageDelay = sumOfAirportDelays / numberOfFlights;
+        }
+        else{ //If isn't a collision occurred during intializing, linear probe to find correct airport
+            for (int j = originIndex + 1; j < bucketList.size(); j++){
+                if(bucketList[j].empty() == false){
+                    if(origin == get<0>(bucketList[j][0].flightData)){
+                        for (int k = 0; k < bucketList[j].size(); k++){
+                            if (destination == get<1>(bucketList[j][k].flightData)){ //check destination of flight
+                                sumOfAirportDelays += get<2>(bucketList[j][k].flightData); //Sum all the flight delays from origin to destination
+                            }
+                        }
+                        averageDelay = sumOfAirportDelays / numberOfFlights;
+                    }
+                }
+            }
+        }
+
+        //If no connecting flight inform users, return -1
+        if (numberOfFlights = 0){
+            cout << "There are no connection flights from " << origin << " to " << destination << endl;
+            return -1.00;
+        }
+        return averageDelay;
+    }
+
 };
 
