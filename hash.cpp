@@ -77,15 +77,20 @@ class HashTable {
             //If not linear probe to find next empty bucket
             else{
                 for (int i = hashedKey + 1; i < bucketList.size(); i++){
-                if (bucketList[i].empty()){
-                    NewBucket(hashedKey,newFlightData, bucketList);
-                    placed = true;
-                    }
+                    if (bucketList[i].empty()){
+                        NewBucket(hashedKey,newFlightData, bucketList);
+                        placed = true;
+                        }
                 }
             }
         }
         if (placed == false){
-            RehashTable(newFlightData, bucketList); //after rehash, just return
+             for (int i = 0; i < hashedKey; i++){
+                    if (bucketList[i].empty()){
+                        NewBucket(hashedKey,newFlightData, bucketList);
+                        placed = true;
+                        }
+                }
             numberOfHashNodes++;
             return;
         }
@@ -93,7 +98,7 @@ class HashTable {
         //Check load factor, if reached rehash
         currentLoadFactor = (double) numberOfHashNodes / bucketList.size();
         if (currentLoadFactor >= maxLoadFactor){
-            RehashTable(newFlightData, bucketList);
+            RehashTable(bucketList);
         }
 
     };
@@ -109,7 +114,7 @@ class HashTable {
     };
 
     //If max load factor is reached, rehash the vector
-    void RehashTable(tuple<string,string,int, string> newFlightData ,vector<vector<HashNode>>& tempBucketList){
+    void RehashTable(vector<vector<HashNode>>& tempBucketList){
         vector<vector<HashNode>> newBucketList;
         newBucketList.resize(tempBucketList.size() * 2);
 
