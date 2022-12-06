@@ -1,6 +1,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ class graph{
                     tempDelay += get<1>(tempDataStorage.at(i));
                 }
             }else{
-                return INT32_MAX;
+                return INT32_MAX; //avg delayTime very unlikely to be upwards of 2 billion, used for error checking
             }
             //for testing purposes
             //cout << "Total Delay " << tempDelay << " Size: " << tempDataStorage.size() << endl;
