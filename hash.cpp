@@ -118,7 +118,7 @@ class HashTable {
         string tempAirport;
         int rehashKey;
         //currentIndex keeps track of current index of tempBucketList
-        int currentIndex;
+        int currentIndex = 0; 
         for (auto i : tempBucketList){
             if (i.empty() == false){
                 tempAirport = get<0>(i[0].flightData);
