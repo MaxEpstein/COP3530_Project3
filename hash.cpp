@@ -154,12 +154,12 @@ class HashTable {
 
 
         //clearing/freeing up memory from bucketList
-        for (int j = 0; j < bucketList.size(); j++){
-            bucketList[j].clear(); 
+        for (int j = 0; j < tempBucketList.size(); j++){
+            tempBucketList[j].clear(); 
         }
-        bucketList.clear();
+        tempBucketList.clear();
         //initialize with newBucketList
-        bucketList = newBucketList;
+        tempBucketList = newBucketList;
         //clearing/freeing up memory from bucketList
         for (int j = 0; j < newBucketList.size(); j++){
             newBucketList[j].clear(); 
