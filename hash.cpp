@@ -96,7 +96,14 @@ class HashTable {
         }
         numberOfHashNodes++; //increment number of nodes to check load factor
         //Check load factor, if reached rehash
-        currentLoadFactor = (double) numberOfHashNodes / bucketList.size();
+
+        int filledBuckets = 0;
+        for (int i = 0; i < bucketList.size(); i++){
+            if(bucketList[i].empty() == false){
+                filledBuckets++;
+            }
+        }
+        currentLoadFactor = (double) filledBuckets / bucketList.size();
         if (currentLoadFactor >= maxLoadFactor){
             RehashTable(bucketList);
         }
@@ -147,7 +154,7 @@ class HashTable {
 
 
         //clear old bucketList
-        bucketList.clear();
+        bucketList.swap(vector<vector<HashNode>>());
         //initialize with newBucketList
         bucketList = newBucketList;
     };
