@@ -80,10 +80,12 @@ class HashTable {
                     if (bucketList[i].empty()){
                         NewBucket(i,newFlightData, bucketList);
                         placed = true;
+                        break;
                     }
                     else if (get<0>(bucketList[i][0].flightData) == get<0>(newFlightData)){
                         NewHashNode(i, newFlightData, bucketList);
                         placed = true;
+                        break;
                     }
                 }
             }
@@ -93,6 +95,7 @@ class HashTable {
                     if (bucketList[i].empty()){
                         NewBucket(i, newFlightData, bucketList);
                         placed = true;
+                        break;
                         }
                 }
             numberOfHashNodes++;
@@ -146,7 +149,6 @@ class HashTable {
                     //if it is, initialize with old bucket vector
                     newBucketList[rehashKey] = tempBucketList[currentIndex];
                     placed = true;
-                    break;
                 }
                 else {
                     //if it isn't, linear probe to find next
