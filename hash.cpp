@@ -146,6 +146,7 @@ class HashTable {
                     //if it is, initialize with old bucket vector
                     newBucketList[rehashKey] = tempBucketList[currentIndex];
                     placed = true;
+                    break;
                 }
                 else {
                     //if it isn't, linear probe to find next
