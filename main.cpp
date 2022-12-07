@@ -163,7 +163,7 @@ int main(){
 
 //need to pass in graph and hash data types to initialize the data structures
 void getFlightDataFromFile(graph &theGraph){
-    fstream file("Data/NewTest.csv", ios::in);
+    fstream file("Data/New2008.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
@@ -211,7 +211,7 @@ void getFlightDataFromFile(graph &theGraph){
 }
 
 void getFlightDataFromFile(HashTable &theHash){
-    fstream file("Data/NewTest.csv", ios::in);
+    fstream file("Data/New2008.csv", ios::in);
 
     string entireLine, Month, Day, delayTime, origin, dest, flightNumber, dummy;
     string test;
