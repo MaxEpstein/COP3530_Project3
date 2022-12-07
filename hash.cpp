@@ -204,6 +204,19 @@ class HashTable {
     double GetAirportAverageDelay(string inputAirport){
         double sumOfAirportDelays = 0.00;
         double averageDelay = 0.00;
+        bool validAirport = false;
+        for (int i = 0; i < bucketList.size(); i++){
+            if (bucketList[i].empty() == false){
+                if (inputAirport == get<0>(bucketList[i][0].flightData)){
+                    validAirport = true;
+                    break;
+                }
+            }
+        }
+        //if its not return max value
+        if (validAirport == false){
+            return INT32_MAX;
+        }
         //Hash the inputAirport to get index in HashTable
         int index = HashFunction(inputAirport, bucketList.size());
         //cout << "Airport: " << inputAirport << " Bucket size " << bucketList.size() << " Index: " << index << endl;
@@ -259,6 +272,20 @@ class HashTable {
         double sumOfAirportDelays = 0.00;
         double averageDelay = 0.00;
         //Hash the inputAirport to get index in HashTable
+        //check if inputted airport is valid
+        bool validAirport = false;
+        for (int i = 0; i < bucketList.size(); i++){
+            if (bucketList[i].empty() == false){
+                if (origin == get<0>(bucketList[i][0].flightData)){
+                    validAirport = true;
+                    break;
+                }
+            }
+        }
+        //if its not return max value
+        if (validAirport == false){
+            return INT32_MAX;
+        }
         int originIndex = HashFunction(origin, bucketList.size());
         //numberOfFlights is the number of flights from origin to destination
         int numberOfFlights = 0;
