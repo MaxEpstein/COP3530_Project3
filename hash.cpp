@@ -78,9 +78,13 @@ class HashTable {
             else{
                 for (int i = hashedKey + 1; i < bucketList.size(); i++){
                     if (bucketList[i].empty()){
-                        NewBucket(hashedKey,newFlightData, bucketList);
+                        NewBucket(i,newFlightData, bucketList);
                         placed = true;
-                        }
+                    }
+                    else if (get<0>(bucketList[i][0].flightData) == get<0>(newFlightData)){
+                        NewHashNode(i, newFlightData, bucketList);
+                        placed = true;
+                    }
                 }
             }
         }
@@ -103,7 +107,8 @@ class HashTable {
                 filledBuckets++;
             }
         }
-        currentLoadFactor = (double) filledBuckets / bucketList.size();
+        currentLoadFactor = ((double) filledBuckets) / bucketList.size();
+        //cout << "Current load factor: " << currentLoadFactor << endl;
         if (currentLoadFactor >= maxLoadFactor){
             RehashTable(bucketList);
         }
@@ -122,6 +127,7 @@ class HashTable {
 
     //If max load factor is reached, rehash the vector
     void RehashTable(vector<vector<HashNode>>& tempBucketList){
+        //cout << "rehashing" << endl;
         vector<vector<HashNode>> newBucketList;
         newBucketList.resize(tempBucketList.size() * 2);
 
@@ -139,12 +145,22 @@ class HashTable {
                 if (newBucketList[rehashKey].empty()){
                     //if it is, initialize with old bucket vector
                     newBucketList[rehashKey] = tempBucketList[currentIndex];
+                    placed = true;
                 }
                 else {
                     //if it isn't, linear probe to find next
-                    for (int i = rehashKey + 1; i < newBucketList.size(); i++){
-                        if(newBucketList[i].empty()){
-                            newBucketList[i] = tempBucketList[currentIndex];
+                    for (int j = rehashKey + 1; j < newBucketList.size(); j++){
+                        if(newBucketList[j].empty()){
+                            newBucketList[j] = tempBucketList[currentIndex];
+                            placed = true;
+                        }
+                    }
+                }
+                if (placed == false){
+                    for (int x = 0; x < rehashKey; x++){
+                        if (newBucketList[x].empty()){
+                            newBucketList[x] = tempBucketList[currentIndex];
+                            placed = true;
                         }
                     }
                 }
@@ -175,6 +191,7 @@ class HashTable {
         for (int i = 0; i < originAirport.size(); i++){
             sumOfASCII += int(originAirport[i]);
         }
+        //cout << "airport: " << originAirport << " ascii val: " << sumOfASCII << " buckets: " << numberOfBuckets << endl;
         return sumOfASCII % numberOfBuckets;
     }
 
@@ -184,13 +201,15 @@ class HashTable {
         double averageDelay = 0.00;
         //Hash the inputAirport to get index in HashTable
         int index = HashFunction(inputAirport, bucketList.size());
+        //cout << "Airport: " << inputAirport << " Bucket size " << bucketList.size() << " Index: " << index << endl;
         int numberOfFlights = 0;
-
+        bool found = false;
         //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
         if (inputAirport == get<0>(bucketList[index][0].flightData)){ 
             for(int i = 0; i < bucketList[index].size(); i++){
                 sumOfAirportDelays += get<2>(bucketList[index][i].flightData); //Sum all the flight delays from inputAirport
                 numberOfFlights++;
+                found = true;
             }
             averageDelay = sumOfAirportDelays / bucketList[index].size();
         }
@@ -203,12 +222,28 @@ class HashTable {
                             numberOfFlights++;
                         }
                         averageDelay = sumOfAirportDelays / bucketList[j].size();
+                        found = true;
                         break;
                     }
                 }
             }
+            if (found == false){
+                for (int x = 0; x < index; x++){
+                    if(bucketList[x].empty() == false){
+                        if(inputAirport == get<0>(bucketList[x][0].flightData)){
+                            for (int k = 0; k < bucketList[x].size(); k++){
+                                sumOfAirportDelays += get<2>(bucketList[x][k].flightData); //Sum all the flight delays from inputAirport
+                                numberOfFlights++;
+                            }
+                            averageDelay = sumOfAirportDelays / bucketList[x].size();
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
-        if (numberOfFlights == 0){
+        if (found == false){
              //cout << "There are no connection flights from " << inputAirport;
             return INT32_MAX;
         }
