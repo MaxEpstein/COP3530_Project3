@@ -91,7 +91,7 @@ class HashTable {
         if (placed == false){
              for (int i = 0; i < hashedKey; i++){
                     if (bucketList[i].empty()){
-                        NewBucket(hashedKey,newFlightData, bucketList);
+                        NewBucket(i, newFlightData, bucketList);
                         placed = true;
                         }
                 }
@@ -153,6 +153,7 @@ class HashTable {
                         if(newBucketList[j].empty()){
                             newBucketList[j] = tempBucketList[currentIndex];
                             placed = true;
+                            break;
                         }
                     }
                 }
@@ -161,6 +162,7 @@ class HashTable {
                         if (newBucketList[x].empty()){
                             newBucketList[x] = tempBucketList[currentIndex];
                             placed = true;
+                            break;
                         }
                     }
                 }
