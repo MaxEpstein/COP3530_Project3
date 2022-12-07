@@ -292,5 +292,14 @@ class HashTable {
         return averageDelay;
     }
 
+    vector<string> allOriginAirports(){
+        vector<string> returnVec;
+        for (int i = 0; i < bucketList.size(); i++){
+            if (bucketList[i].empty() == false)
+                returnVec.push_back(get<0>(bucketList[i][0].flightData));
+        }
+        return returnVec;
+    }
+
 };
 

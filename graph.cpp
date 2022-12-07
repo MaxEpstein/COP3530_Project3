@@ -94,6 +94,12 @@ class graph{
             return (double)(avgDelay / totalFlights);
         }
 
-
+        vector<string> allOriginAirports(){
+            vector<string> returnVec;
+            for (auto it = airportMap.begin(); it != airportMap.end(); it++){
+                returnVec.push_back(it->first);
+            }
+            return returnVec;
+        }
 
 };

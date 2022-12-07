@@ -53,6 +53,31 @@ int main(){
         cin >> userInput;
 
         if (userInput == 1){
+            int input;
+            cout << " " << endl;
+            cout << "Insert 1 for Graph and 2 for Hashmap" << endl;
+            cin >> input;
+            if (input == 1){
+                auto start = chrono::steady_clock::now();
+                vector<string> graphOrigins = ourGraph.allOriginAirports();
+                auto end = chrono::steady_clock::now();
+                auto elapsed = chrono::duration_cast<std::chrono::microseconds>(end - start);
+                for (int i = 0; i < graphOrigins.size(); i++){
+                    cout << graphOrigins[i] << endl;
+                }
+                cout << "Graph Runtime: " << elapsed.count() << endl;
+            }
+            else if (input == 2){
+                auto start = chrono::steady_clock::now();
+                vector<string> hashOrigins = hash.allOriginAirports();
+                auto end = chrono::steady_clock::now();
+                auto elapsed = chrono::duration_cast<std::chrono::microseconds>(end - start);
+                for (int i = 0; i < hashOrigins.size(); i++){
+                    cout << hashOrigins[i] << endl;
+                }
+                cout << "Hashmap Runtime: " << elapsed.count() << endl;
+            }
+            
 
         }
         if (userInput == 2){
