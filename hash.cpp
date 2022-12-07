@@ -258,31 +258,56 @@ class HashTable {
         //numberOfFlights is the number of flights from origin to destination
         int numberOfFlights = 0;
         
-        //Check HashTable index in the bucketList, if it is the correct airport, sum the delays
+        bool found = false;
         if (origin == get<0>(bucketList[originIndex][0].flightData)){ 
             for(int i = 0; i < bucketList[originIndex].size(); i++){
-                if (destination == get<1>(bucketList[originIndex][i].flightData)){
-                    sumOfAirportDelays += get<2>(bucketList[originIndex][i].flightData); //Sum all the flight delays from origin to destination
-                    numberOfFlights++; //add to number of flights between airports
-                }
+                if (get<1>(bucketList[originIndex][i].flightData) == destination){
+                        sumOfAirportDelays += get<2>(bucketList[originIndex][i].flightData); //Sum all the flight delays from origin to destination
+                        numberOfFlights++;
+                        found = true;
+                     }
             }
-            averageDelay = sumOfAirportDelays / numberOfFlights;
+            averageDelay = sumOfAirportDelays / bucketList[originIndex].size();
         }
         else{ //If isn't a collision occurred during intializing, linear probe to find correct airport
             for (int j = originIndex + 1; j < bucketList.size(); j++){
                 if(bucketList[j].empty() == false){
                     if(origin == get<0>(bucketList[j][0].flightData)){
                         for (int k = 0; k < bucketList[j].size(); k++){
-                            if (destination == get<1>(bucketList[j][k].flightData)){ //check destination of flight
+                            if (get<1>(bucketList[j][k].flightData) == destination){
                                 sumOfAirportDelays += get<2>(bucketList[j][k].flightData); //Sum all the flight delays from origin to destination
                                 numberOfFlights++;
+                                found = true;
                             }
                         }
-                        averageDelay = sumOfAirportDelays / numberOfFlights;
+                        averageDelay = sumOfAirportDelays / bucketList[j].size();
+                        break;
+                    }
+                }
+            }
+            if (found == false){
+                for (int x = 0; x < originIndex; x++){
+                    if(bucketList[x].empty() == false){
+                        if(origin == get<0>(bucketList[x][0].flightData)){
+                            for (int k = 0; k < bucketList[x].size(); k++){
+                                if (get<1>(bucketList[x][k].flightData) == destination){
+                                    sumOfAirportDelays += get<2>(bucketList[x][k].flightData); //Sum all the flight delays from inputAirport
+                                    numberOfFlights++;
+                                    found = true;
+                                }
+                            }
+                            averageDelay = sumOfAirportDelays / bucketList[x].size();
+                            break;
+                        }
                     }
                 }
             }
         }
+        if (found == false){
+             //cout << "There are no connection flights from " << inputAirport;
+            return INT32_MAX;
+        }
+        return averageDelay; 
 
         //If no connecting flight inform users, return -1
         if (numberOfFlights = 0){
