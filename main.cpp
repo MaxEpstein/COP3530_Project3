@@ -65,7 +65,7 @@ int main(){
                 for (int i = 0; i < graphOrigins.size(); i++){
                     cout << graphOrigins[i] << endl;
                 }
-                cout << "Graph Runtime: " << elapsed.count() << endl;
+                cout << "Graph Runtime: " << elapsed.count() << " microseconds" << endl;
             }
             else if (input == 2){
                 auto start = chrono::steady_clock::now();
@@ -75,7 +75,7 @@ int main(){
                 for (int i = 0; i < hashOrigins.size(); i++){
                     cout << hashOrigins[i] << endl;
                 }
-                cout << "Hashmap Runtime: " << elapsed.count() << endl;
+                cout << "Hashmap Runtime: " << elapsed.count() << " microseconds" << endl;
             }
             
 
