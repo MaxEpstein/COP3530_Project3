@@ -98,8 +98,6 @@ class HashTable {
                         break;
                         }
                 }
-            numberOfHashNodes++;
-            return;
         }
         numberOfHashNodes++; //increment number of nodes to check load factor
         //Check load factor, if reached rehash
