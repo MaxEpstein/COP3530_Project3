@@ -96,7 +96,12 @@ class HashTable {
                         NewBucket(i, newFlightData, bucketList);
                         placed = true;
                         break;
-                        }
+                    }
+                    else if (get<0>(bucketList[i][0].flightData) == get<0>(newFlightData)){
+                        NewHashNode(i, newFlightData, bucketList);
+                        placed = true;
+                        break;
+                    }
                 }
         }
         numberOfHashNodes++; //increment number of nodes to check load factor
